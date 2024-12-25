@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/build/pdf';
+import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
+
+// Set the worker source
+GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 const HelloWorld = () => {
-  // State to store font size, zoom level, and input field values
   const [fontSize, setFontSize] = useState('8vw');
   const [zoom, setZoom] = useState(1);
   const [companyName, setCompanyName] = useState('');
   const [agreementName, setAgreementName] = useState('');
   const [pdfFile, setPdfFile] = useState(null);
+  const [pdfText, setPdfText] = useState(''); // State for PDF text content
 
-  // Dynamically adjust styles based on window size and zoom level
   useEffect(() => {
     const updateStyles = () => {
       const width = window.innerWidth;
@@ -30,7 +34,6 @@ const HelloWorld = () => {
     return () => window.removeEventListener('resize', updateStyles);
   }, []);
 
-  // Handle zooming with mouse scroll
   const handleWheel = (event) => {
     setZoom((prevZoom) =>
       event.deltaY > 0
@@ -39,12 +42,31 @@ const HelloWorld = () => {
     );
   };
 
-  // Handle PDF file upload
-  const handlePdfChange = (event) => {
-    setPdfFile(event.target.files[0]);
+  const handlePdfChange = async (event) => {
+    const file = event.target.files[0];
+    setPdfFile(file); // Set the selected PDF file in state
+
+    if (file) {
+      const fileReader = new FileReader();
+      fileReader.onload = async () => {
+        const typedArray = new Uint8Array(fileReader.result);
+        const pdf = await getDocument({ data: typedArray }).promise;
+        const numPages = pdf.numPages;
+        let textContent = '';
+
+        for (let i = 1; i <= numPages; i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          const textItems = content.items;
+          textContent += textItems.map(item => item.str).join(' ') + '\n';
+        }
+
+        setPdfText(textContent); // Set the extracted text content
+      };
+      fileReader.readAsArrayBuffer(file);
+    }
   };
 
-  // Handle form submission
   const handleSubmit = () => {
     console.log('Company Name:', companyName);
     console.log('Agreement Name:', agreementName);
@@ -52,7 +74,6 @@ const HelloWorld = () => {
     alert('Form submitted successfully!');
   };
 
-  // Styles for container and elements
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -66,7 +87,7 @@ const HelloWorld = () => {
   };
 
   const textStyle = {
-    color: 'black',
+    color: 'whitesmoke',
     fontSize: fontSize,
     textAlign: 'center',
     whiteSpace: 'nowrap',
@@ -125,6 +146,13 @@ const HelloWorld = () => {
           style={inputStyle}
         />
         {pdfFile && <p>Uploaded File: {pdfFile.name}</p>}
+        <textarea
+          value={pdfText}
+          readOnly
+          rows={10}
+          style={{ ...inputStyle, height: '200px', resize: 'none' }}
+          placeholder="PDF content will be displayed here..."
+        />
         <button style={buttonStyle} onClick={handleSubmit}>
           Submit
         </button>
@@ -133,4 +161,4 @@ const HelloWorld = () => {
   );
 };
 
-export default HelloWorld;
+export default HelloWorld; 
