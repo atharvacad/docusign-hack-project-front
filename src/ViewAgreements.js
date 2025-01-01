@@ -20,7 +20,7 @@ const ViewAgreements = () => {
   const renderTable = (data) => {
     const keys = Object.keys(data[0]);
     return (
-      <table>
+      <table border="1">
         <thead>
           <tr>
             {keys.map((key) => (
@@ -33,7 +33,11 @@ const ViewAgreements = () => {
             <tr key={index}>
               {keys.map((key) => (
                 <td key={key}>
-                  {typeof item[key] === 'object' ? JSON.stringify(item[key]) : item[key]}
+                  {Array.isArray(item[key])
+                    ? renderTable(item[key])
+                    : typeof item[key] === 'object'
+                    ? JSON.stringify(item[key])
+                    : item[key]}
                 </td>
               ))}
             </tr>
