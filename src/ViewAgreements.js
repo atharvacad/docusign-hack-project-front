@@ -17,6 +17,32 @@ const ViewAgreements = () => {
     fetchAgreements();
   }, []);
 
+  const renderTable = (data) => {
+    const keys = Object.keys(data[0]);
+    return (
+      <table>
+        <thead>
+          <tr>
+            {keys.map((key) => (
+              <th key={key}>{key}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item, index) => (
+            <tr key={index}>
+              {keys.map((key) => (
+                <td key={key}>
+                  {typeof item[key] === 'object' ? JSON.stringify(item[key]) : item[key]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
   return (
     <div>
       <h1>All Agreements</h1>
@@ -30,7 +56,8 @@ const ViewAgreements = () => {
                 <li key={version._id}>
                   <p>Version: {version.versionNumber}</p>
                   <p>Upload Date: {new Date(version.uploadDate).toLocaleString()}</p>
-                  <p>AI Output: {version.aiOutput}</p>
+                  <p>AI Output:</p>
+                  {version.aiOutput && renderTable(JSON.parse(version.aiOutput).milestones)}
                 </li>
               ))}
             </ul>
