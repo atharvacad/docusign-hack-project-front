@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
+    "axios": "^1.7.9",
     "cra-template": "1.2.0",
     "pdfjs-dist": "^3.11.174",
     "react": "^18.2.0",
@@ -15,11 +16,11 @@
     "web-vitals": "^4.2.4"
   },
   "scripts": {
-    "start": "PORT=3001 react-scripts --openssl-legacy-provider start",
+    "start": "cross-env PORT=3001 react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },  
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -39,6 +40,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "cross-env": "^7.0.3"
   }
 }

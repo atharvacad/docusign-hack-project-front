@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const HelloWorld = () => {
   const [fontSize, setFontSize] = useState('8vw');
   const [zoom, setZoom] = useState(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const updateStyles = () => {
@@ -26,11 +28,10 @@ const HelloWorld = () => {
   }, []);
 
   const handleWheel = (event) => {
-    setZoom((prevZoom) =>
-      event.deltaY > 0
-        ? Math.max(0.5, prevZoom - 0.1) // Zoom out
-        : Math.min(2, prevZoom + 0.1) // Zoom in
-    );
+    setZoom((prevZoom) => {
+      const newZoom = prevZoom + event.deltaY * -0.01;
+      return Math.min(Math.max(newZoom, 0.5), 3);
+    });
   };
 
   const containerStyle = {
@@ -53,9 +54,21 @@ const HelloWorld = () => {
     transition: 'font-size 0.2s ease',
   };
 
+  const buttonStyle = {
+    marginTop: '20px',
+    padding: '10px 20px',
+    fontSize: '16px',
+    cursor: 'pointer',
+  };
+
+  const handleButtonClick = () => {
+    navigate('/UploadDoc');
+  };
+
   return (
     <div style={containerStyle} onWheel={handleWheel}>
       <span style={textStyle}>Hello World</span>
+      <button style={buttonStyle} onClick={handleButtonClick}>Start</button>
     </div>
   );
 };

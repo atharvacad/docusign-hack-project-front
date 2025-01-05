@@ -1,56 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/build/pdf';
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
-
-// Set the worker source
-GlobalWorkerOptions.workerSrc = pdfjsWorker;
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const UploadDoc = () => {
+  const [pdfFile, setPdfFile] = useState(null);
   const [companyName, setCompanyName] = useState('');
   const [agreementName, setAgreementName] = useState('');
-  const [pdfFile, setPdfFile] = useState(null);
-  const [pdfText, setPdfText] = useState(''); // State for PDF text content
-  const [pageCount, setPageCount] = useState(0); // State for PDF page count
+  const [pdfText, setPdfText] = useState('');
+  const [pageCount, setPageCount] = useState(0);
 
-  const handlePdfChange = async (event) => {
+  const handlePdfChange = (event) => {
     const file = event.target.files[0];
-    setPdfFile(file); // Set the selected PDF file in state
+    setPdfFile(file);
+    // Add logic to extract text and page count from the PDF file if needed
+  };
 
-    if (file) {
-      const fileReader = new FileReader();
-      fileReader.onload = async () => {
-        const typedArray = new Uint8Array(fileReader.result);
-        const pdf = await getDocument({ data: typedArray }).promise;
-        const numPages = pdf.numPages;
-        let textContent = '';
-
-        for (let i = 1; i <= numPages; i++) {
-          const page = await pdf.getPage(i);
-          const content = await page.getTextContent();
-          const textItems = content.items;
-          textContent += textItems.map(item => item.str).join(' ') + '\n';
-        }
-
-        setPdfText(textContent); // Set the extracted text content
-        setPageCount(numPages); // Set the page count
-      };
-      fileReader.readAsArrayBuffer(file);
+  const handleSubmit = async () => {
+    if (!pdfFile || !companyName || !agreementName) {
+      alert('Please fill in all fields and select a PDF file.');
+      return;
     }
-  };
 
-  const handleSubmit = () => {
-    console.log('Company Name:', companyName);
-    console.log('Agreement Name:', agreementName);
-    console.log('Uploaded File:', pdfFile ? pdfFile.name : 'No file uploaded');
-    alert('Form submitted successfully!');
-  };
+    const formData = new FormData();
+    formData.append('pdfFile', pdfFile);
+    formData.append('companyName', companyName);
+    formData.append('agreementName', agreementName);
 
-  const inputContainerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-    marginTop: '20px',
-    alignItems: 'center',
+    console.log('Backend URL:', process.env.REACT_APP_BACKEND_URL); // Add this line to verify the URL
+
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/agreements`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setPdfText(response.data.pdfText);
+      alert('PDF uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading PDF:', error); // Add this line to log the error
+      alert('Error uploading PDF');
+    }
   };
 
   const inputStyle = {
@@ -59,6 +47,7 @@ const UploadDoc = () => {
     borderRadius: '5px',
     border: '1px solid #ccc',
     width: '300px',
+    margin: '10px 0',
   };
 
   const buttonStyle = {
@@ -66,24 +55,24 @@ const UploadDoc = () => {
     fontSize: '16px',
     backgroundColor: '#007BFF',
     color: 'white',
-    border : 'none',
+    border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
     marginTop: '10px',
   };
 
   return (
-    <div style={inputContainerStyle}>
+    <div>
       <input
         type="text"
-        placeholder="Enter Company Name"
+        placeholder="Company Name"
         value={companyName}
         onChange={(e) => setCompanyName(e.target.value)}
         style={inputStyle}
       />
       <input
         type="text"
-        placeholder="Enter Agreement Name"
+        placeholder="Agreement Name"
         value={agreementName}
         onChange={(e) => setAgreementName(e.target.value)}
         style={inputStyle}
