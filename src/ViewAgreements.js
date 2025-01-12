@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './ViewAgreements.css'; // Import the CSS file
 
 const ViewAgreements = () => {
   const [agreements, setAgreements] = useState([]);
+  const [selectedVersions, setSelectedVersions] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,6 +26,34 @@ const ViewAgreements = () => {
 
     fetchAgreements();
   }, []);
+
+  const handleVersionSelect = (version) => {
+    setSelectedVersions((prevSelectedVersions) => {
+      if (prevSelectedVersions.some((v) => v._id === version._id)) {
+        return prevSelectedVersions.filter((v) => v._id !== version._id);
+      } else if (prevSelectedVersions.length < 2) {
+        return [...prevSelectedVersions, version];
+      } else {
+        return prevSelectedVersions;
+      }
+    });
+  };
+
+  const handleCompareAiInsight = () => {
+    if (selectedVersions.length === 2) {
+      const [versionA, versionB] = selectedVersions;
+      navigate('/compare-ai-insight', {
+        state: {
+          companyName: versionA.companyName,
+          agreementName: versionA.agreementName,
+          versionNumberA: versionA.versionNumber,
+          versionNumberB: versionB.versionNumber,
+        },
+      });
+    } else {
+      alert('Please select exactly two versions to compare.');
+    }
+  };
 
   const renderTable = (data) => {
     const keys = Object.keys(data[0]);
@@ -76,7 +105,10 @@ const ViewAgreements = () => {
             <p>{agreement.agreementName}</p>
             <ul>
               {agreement.versions.map((version) => (
-                <li key={version._id}>
+                <li
+                  key={version._id}
+                  className={selectedVersions.some((v) => v._id === version._id) ? 'selected-version' : ''}
+                >
                   <p>Version: {version.versionNumber}</p>
                   <p>Upload Date: {new Date(version.uploadDate).toLocaleString()}</p>
                   <p>AI Output:</p>
@@ -91,12 +123,18 @@ const ViewAgreements = () => {
                   >
                     AI Insight Page
                   </button>
+                  <button onClick={() => handleVersionSelect({ ...version, companyName: agreement.companyName, agreementName: agreement.agreementName })}>
+                    {selectedVersions.some((v) => v._id === version._id) ? 'Deselect' : 'Select'} Version
+                  </button>
                 </li>
               ))}
             </ul>
           </li>
         ))}
       </ul>
+      <button onClick={handleCompareAiInsight} disabled={selectedVersions.length !== 2}>
+        Compare AI Insight
+      </button>
     </div>
   );
 };
