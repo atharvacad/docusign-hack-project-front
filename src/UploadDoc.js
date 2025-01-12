@@ -5,6 +5,8 @@ const UploadDoc = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [companyName, setCompanyName] = useState('');
   const [agreementName, setAgreementName] = useState('');
+  const [contactName, setContactName] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
   const [pdfText, setPdfText] = useState('');
   const [pageCount, setPageCount] = useState(0);
 
@@ -15,7 +17,7 @@ const UploadDoc = () => {
   };
 
   const handleSubmit = async () => {
-    if (!pdfFile || !companyName || !agreementName) {
+    if (!pdfFile || !companyName || !agreementName || !contactName || !contactEmail) {
       alert('Please fill in all fields and select a PDF file.');
       return;
     }
@@ -24,6 +26,8 @@ const UploadDoc = () => {
     formData.append('pdfFile', pdfFile);
     formData.append('companyName', companyName);
     formData.append('agreementName', agreementName);
+    formData.append('contactName', contactName);
+    formData.append('contactEmail', contactEmail);
 
     console.log('Backend URL:', process.env.REACT_APP_BACKEND_URL); // Add this line to verify the URL
 
@@ -75,6 +79,20 @@ const UploadDoc = () => {
         placeholder="Agreement Name"
         value={agreementName}
         onChange={(e) => setAgreementName(e.target.value)}
+        style={inputStyle}
+      />
+      <input
+        type="text"
+        placeholder="Contact Name"
+        value={contactName}
+        onChange={(e) => setContactName(e.target.value)}
+        style={inputStyle}
+      />
+      <input
+        type="email"
+        placeholder="Contact Email"
+        value={contactEmail}
+        onChange={(e) => setContactEmail(e.target.value)}
         style={inputStyle}
       />
       <input
