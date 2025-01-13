@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Import axios
 import './ViewAgreements.css'; // Import the CSS file
 
 const ViewAgreements = () => {
   const [agreements, setAgreements] = useState([]);
   const [selectedVersions, setSelectedVersions] = useState([]);
+  const [esignatureResponse, setEsignatureResponse] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,6 +54,19 @@ const ViewAgreements = () => {
       });
     } else {
       alert('Please select exactly two versions to compare.');
+    }
+  };
+
+  const handleEsignatureSubmit = async (version) => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/esignature`, {
+        companyName: version.companyName,
+        agreementName: version.agreementName,
+        versionNumber: version.versionNumber,
+      });
+      setEsignatureResponse(response.data.message + ' Envelope ID: ' + response.data.envelopeId);
+    } catch (error) {
+      console.error('Error sending eSignature:', error);
     }
   };
 
@@ -126,6 +141,9 @@ const ViewAgreements = () => {
                   <button onClick={() => handleVersionSelect({ ...version, companyName: agreement.companyName, agreementName: agreement.agreementName })}>
                     {selectedVersions.some((v) => v._id === version._id) ? 'Deselect' : 'Select'} Version
                   </button>
+                  <button onClick={() => handleEsignatureSubmit({ ...version, companyName: agreement.companyName, agreementName: agreement.agreementName })}>
+                    Submit for eSignature
+                  </button>
                 </li>
               ))}
             </ul>
@@ -135,6 +153,12 @@ const ViewAgreements = () => {
       <button onClick={handleCompareAiInsight} disabled={selectedVersions.length !== 2}>
         Compare AI Insight
       </button>
+      {esignatureResponse && (
+        <div>
+          <h3>eSignature Response:</h3>
+          <p>{esignatureResponse}</p>
+        </div>
+      )}
     </div>
   );
 };

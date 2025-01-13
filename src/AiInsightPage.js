@@ -6,6 +6,8 @@ const AiInsightPage = () => {
   const location = useLocation();
   const { companyName, agreementName, versionNumber } = location.state;
   const [aiInsight, setAiInsight] = useState(null);
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
 
   useEffect(() => {
     const fetchAiInsight = async () => {
@@ -24,6 +26,20 @@ const AiInsightPage = () => {
 
     fetchAiInsight();
   }, [companyName, agreementName, versionNumber]);
+
+  const handleQuestionSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const initialResponse = JSON.stringify(aiInsight); // Convert aiInsight to string
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat-ai-insight-agreement`, {
+        initialResponse,
+        userQuestion: question,
+      });
+      setAnswer(response.data.response); // Set the response field to the answer state
+    } catch (error) {
+      console.error('Error fetching answer:', error);
+    }
+  };
 
   const renderMilestones = (milestones) => (
     <ul>
@@ -101,6 +117,26 @@ const AiInsightPage = () => {
 
           <h2>Recommendations</h2>
           {renderRecommendations(aiInsight.recommendations)}
+
+          <h2>Q&A</h2>
+          <form onSubmit={handleQuestionSubmit}>
+            <label>
+              Ask a question:
+              <input
+                type="text"
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                required
+              />
+            </label>
+            <button type="submit">Submit</button>
+          </form>
+          {answer && (
+            <div>
+              <h3>Answer:</h3>
+              <p>{answer}</p>
+            </div>
+          )}
         </div>
       ) : (
         <p>Loading...</p>
