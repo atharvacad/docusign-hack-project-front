@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import './CompareAiInsight.css'; // Import the CSS file
 
 const CompareAiInsightPage = () => {
   const location = useLocation();
@@ -28,7 +29,7 @@ const CompareAiInsightPage = () => {
 
   const renderComparisonTable = (data) => {
     return (
-      <table border="1">
+      <table border="1" className="comparison-table">
         <thead>
           <tr>
             <th>Category</th>
@@ -54,8 +55,8 @@ const CompareAiInsightPage = () => {
   };
 
   return (
-    <div>
-      <h1>Compare AI Insight</h1>
+    <div className="compare-ai-insight-page">
+      <h1 className="center-text">Compare AI Insight</h1>
       {comparisonResult ? (
         renderComparisonTable(comparisonResult)
       ) : (

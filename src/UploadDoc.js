@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import './UploadDoc.css'; // Import the CSS file
 
 const UploadDoc = () => {
   const [pdfFile, setPdfFile] = useState(null);
@@ -7,13 +8,11 @@ const UploadDoc = () => {
   const [agreementName, setAgreementName] = useState('');
   const [contactName, setContactName] = useState('');
   const [contactEmail, setContactEmail] = useState('');
-  const [pdfText, setPdfText] = useState('');
-  const [pageCount, setPageCount] = useState(0);
+  const fileInputRef = useRef(null); // Create a ref for the file input
 
-  const handlePdfChange = (event) => {
+  const handleFileChange = (event) => {
     const file = event.target.files[0];
     setPdfFile(file);
-    // Add logic to extract text and page count from the PDF file if needed
   };
 
   const handleSubmit = async () => {
@@ -37,8 +36,14 @@ const UploadDoc = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setPdfText(response.data.pdfText);
       alert('PDF uploaded successfully');
+      // Clear all fields after successful upload
+      setPdfFile(null);
+      setCompanyName('');
+      setAgreementName('');
+      setContactName('');
+      setContactEmail('');
+      fileInputRef.current.value = ''; // Clear the file input
     } catch (error) {
       console.error('Error uploading PDF:', error); // Add this line to log the error
       alert('Error uploading PDF');
@@ -57,16 +62,16 @@ const UploadDoc = () => {
   const buttonStyle = {
     padding: '10px 20px',
     fontSize: '16px',
-    backgroundColor: '#007BFF',
-    color: 'white',
-    border: 'none',
     borderRadius: '5px',
+    border: 'none',
+    backgroundColor: '#007bff',
+    color: 'white',
     cursor: 'pointer',
-    marginTop: '10px',
   };
 
   return (
-    <div>
+    <div className="upload-doc-container">
+      <h1 className="upload-doc-heading">Upload Document</h1>
       <input
         type="text"
         placeholder="Company Name"
@@ -98,25 +103,12 @@ const UploadDoc = () => {
       <input
         type="file"
         accept="application/pdf"
-        onChange={handlePdfChange}
+        onChange={handleFileChange}
         style={inputStyle}
+        ref={fileInputRef} // Attach the ref to the file input
       />
-      {pdfFile && <p>Uploaded File: {pdfFile.name}</p>}
-      <textarea
-        value={pdfText}
-        readOnly
-        rows={10}
-        style={{ ...inputStyle, height: '200px', resize: 'none' }}
-        placeholder="PDF content will be displayed here..."
-      />
-      <input
-        type="text"
-        value={`Page Count: ${pageCount}`}
-        readOnly
-        style={{ ...inputStyle, height: '40px', textAlign: 'center' }}
-      />
-      <button style={buttonStyle} onClick={handleSubmit}>
-        Submit
+      <button onClick={handleSubmit} style={buttonStyle}>
+        Upload PDF
       </button>
     </div>
   );

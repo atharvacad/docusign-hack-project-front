@@ -1,0 +1,16 @@
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  background-image: url("https://raw.githubusercontent.com/Marvin1198/BackgroubWallpapers/main/8562939_25544.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: black; /* Set the font color to black */
+  padding-top: 0px; /* Adjust based on the height of the navbar */
+  padding-bottom: 0px; /* Adjust based on the height of the footer */
+  font-family: Courier, monospace; /* Apply the font style */
+}
+
+.content {
+  
+}

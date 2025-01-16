@@ -73,7 +73,7 @@ const ViewAgreements = () => {
   const renderTable = (data) => {
     const keys = Object.keys(data[0]);
     return (
-      <table border="1">
+      <table border="1" className="data-table">
         <thead>
           <tr>
             {keys.map((key) => (
@@ -111,18 +111,20 @@ const ViewAgreements = () => {
   };
 
   return (
-    <div>
-      <h1>All Agreements</h1>
-      <ul>
+    <div className="view-agreements">
+      <h1 className="center-text">All Agreements</h1>
+      <ul className="agreements-list">
         {agreements.map((agreement) => (
-          <li key={agreement._id}>
-            <h2>{agreement.companyName}</h2>
-            <p>{agreement.agreementName}</p>
-            <ul>
+          <li key={agreement._id} className="agreement-item">
+            <h2>Company Name: {agreement.companyName}</h2>
+            <p>Agreement Name: {agreement.agreementName}</p>
+            <p>Contact Name: {agreement.contactName}</p>
+            <p>Contact Email: {agreement.contactEmail}</p>
+            <ul className="versions-list">
               {agreement.versions.map((version) => (
                 <li
                   key={version._id}
-                  className={selectedVersions.some((v) => v._id === version._id) ? 'selected-version' : ''}
+                  className={`version-item ${selectedVersions.some((v) => v._id === version._id) ? 'selected-version' : ''}`}
                 >
                   <p>Version: {version.versionNumber}</p>
                   <p>Upload Date: {new Date(version.uploadDate).toLocaleString()}</p>
@@ -154,7 +156,7 @@ const ViewAgreements = () => {
         Compare AI Insight
       </button>
       {esignatureResponse && (
-        <div>
+        <div className="esignature-response">
           <h3>eSignature Response:</h3>
           <p>{esignatureResponse}</p>
         </div>

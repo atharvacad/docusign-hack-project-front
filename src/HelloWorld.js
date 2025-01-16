@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './HelloWorld.css'; // Import the CSS file
 
 const HelloWorld = () => {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ const HelloWorld = () => {
     height: '100vh',
     fontSize: '24px',
     transition: 'font-size 0.2s ease',
+    position: 'relative',
+    zIndex: 1,
   };
 
   const buttonStyle = {
@@ -30,10 +33,10 @@ const HelloWorld = () => {
   };
 
   return (
-    <div style={containerStyle}>
-      <span>Hello World</span>
-      <button style={buttonStyle} onClick={handleUploadClick}>Start</button>
-      <button style={buttonStyle} onClick={handleViewAgreementsClick}>View All Agreements</button>
+    <div className="container" style={containerStyle}>
+      <h1>Hello, World!</h1>
+      <button style={buttonStyle} onClick={handleUploadClick}>Upload Document</button>
+      <button style={buttonStyle} onClick={handleViewAgreementsClick}>View Agreements</button>
     </div>
   );
 };
