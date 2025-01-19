@@ -63,6 +63,20 @@ const ViewAgreements = () => {
         versionNumber: version.versionNumber,
       });
       setEsignatureResponse(response.data.message + ' Envelope ID: ' + response.data.envelopeId);
+      alert('eSignature Request sent successfully');
+      setAgreements((prevAgreements) =>
+        prevAgreements.map((agreement) =>
+          agreement.versions.some((v) => v._id === version._id)
+            ? {
+                ...agreement,
+                versions: agreement.versions.map((v) =>
+                  v._id === version._id ? { ...v, esignSent: true } : v
+                ),
+              }
+            : agreement
+        )
+      );
+      setEsignatureResponse('');
     } catch (error) {
       console.error('Error sending eSignature:', error);
     }

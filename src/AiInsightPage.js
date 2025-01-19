@@ -134,9 +134,11 @@ const AiInsightPage = () => {
         </div>
       </form>
       {answer && (
-        <div className="answer-response">
+        <div className="highlighted-answer1">
+          <ul className="highlighted-answer">
           <h3>Answer:</h3>
           <p>{answer}</p>
+          </ul>
         </div>
       )}
     </div>

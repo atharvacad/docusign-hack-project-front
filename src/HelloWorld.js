@@ -12,10 +12,15 @@ const HelloWorld = () => {
   return (
     <div className="container">
       <div className="left-section">
-        <h1>Hello, World!</h1>
+        <ul className="ul1">
+          <img src="https://raw.githubusercontent.com/Marvin1198/BackgroubWallpapers/main/Brain.png" alt="Logo" className="logo-image" />
+        </ul>
       </div>
       <div className="right-section">
-        <button className="upload-button" onClick={handleUploadClick}>Start Now</button>
+        <ul className="ul1">
+            <h1>Let the AI thinks for you !!!</h1>
+            <button className="upload-button" onClick={handleUploadClick}>Start Now</button>
+        </ul>
       </div>
     </div>
   );
