@@ -1,14 +1,3 @@
-.navbar {
-  background-color: rgba(194, 243, 255, 0.062);
-  backdrop-filter: blur(10px);
-  padding: 1rem;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: top 0.3s;
-}
 
 .navbar.hidden {
   top: -100px; /* Adjust based on the height of the navbar */
@@ -35,21 +24,13 @@
   text-decoration: underline;
 }
 
-/* filepath: /d:/GitHubCode/React/docusign-hack-project-front/src/Footer.css */
 .footer {
   background-color: rgba(194, 243, 255, 0.062);
   backdrop-filter: blur(10px);
   color: white;
   text-align: center;
-  padding: 1rem;
-  position: fixed;
-  width: 100%;
+  padding: 10px 0;
+  position: absolute;
   bottom: 0;
-  z-index: 1000;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-  transition: bottom 0.3s;
-}
-
-.footer.hidden {
-  bottom: -100px; /* Adjust based on the height of the footer */
+  width: 100%;
 }

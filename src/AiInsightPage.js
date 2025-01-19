@@ -86,10 +86,17 @@ const AiInsightPage = () => {
   );
 
   return (
+    
     <div className="ai-insight-page">
       <h1 className="center-text">AI Insight for {agreementName}</h1>
       {aiInsight ? (
-        <div className="agreement-details">
+        <div>
+        <div className="agreement-details1">
+          <h2>Comapny Name: {companyName}</h2>
+          <h2>Agrement Name: {agreementName}</h2>
+          <h2>Version Number: {versionNumber}</h2>
+          </div>
+          <div className="agreement-details">
           <h2>Overall Project Status</h2>
           <h3>Completed Milestones</h3>
           {renderMilestones(aiInsight.overall_project_status.completed_milestones)}
@@ -108,17 +115,23 @@ const AiInsightPage = () => {
           <h2>Recommendations</h2>
           {renderRecommendations(aiInsight.recommendations)}
         </div>
+        </div>
       ) : (
         <p>Loading AI Insight...</p>
       )}
-      <form onSubmit={handleQuestionSubmit}>
-        <input
-          type="text"
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          placeholder="Ask a question about this agreement"
-        />
-        <button type="submit">Submit</button>
+         <form onSubmit={handleQuestionSubmit}>
+        <div className="inp">
+          <textarea
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            placeholder="Ask a question about this agreement"
+            className="textarea" // Add a class for textarea
+
+          />
+        </div>
+        <div className="button-container">
+          <button type="submit">Submit</button>
+        </div>
       </form>
       {answer && (
         <div className="answer-response">

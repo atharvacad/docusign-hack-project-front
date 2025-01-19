@@ -1,18 +1,33 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './UploadDoc.css'; // Import the CSS file
 
 const UploadDoc = () => {
+  const location = useLocation();
+  const { companyName: initialCompanyName, agreementName: initialAgreementName, contactName: initialContactName, contactEmail: initialContactEmail } = location.state || {};
+
   const [pdfFile, setPdfFile] = useState(null);
-  const [companyName, setCompanyName] = useState('');
-  const [agreementName, setAgreementName] = useState('');
-  const [contactName, setContactName] = useState('');
-  const [contactEmail, setContactEmail] = useState('');
+  const [companyName, setCompanyName] = useState(initialCompanyName || '');
+  const [agreementName, setAgreementName] = useState(initialAgreementName || '');
+  const [contactName, setContactName] = useState(initialContactName || '');
+  const [contactEmail, setContactEmail] = useState(initialContactEmail || '');
+  const [fileName, setFileName] = useState(''); // State to store the file name
   const fileInputRef = useRef(null); // Create a ref for the file input
+
+  useEffect(() => {
+    if (location.state) {
+      setCompanyName(initialCompanyName);
+      setAgreementName(initialAgreementName);
+      setContactName(initialContactName);
+      setContactEmail(initialContactEmail);
+    }
+  }, [location.state, initialCompanyName, initialAgreementName, initialContactName, initialContactEmail]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setPdfFile(file);
+    setFileName(file ? file.name : ''); // Update the file name state
   };
 
   const handleSubmit = async () => {
@@ -43,6 +58,7 @@ const UploadDoc = () => {
       setAgreementName('');
       setContactName('');
       setContactEmail('');
+      setFileName(''); // Clear the file name
       fileInputRef.current.value = ''; // Clear the file input
     } catch (error) {
       console.error('Error uploading PDF:', error); // Add this line to log the error
@@ -50,64 +66,60 @@ const UploadDoc = () => {
     }
   };
 
-  const inputStyle = {
-    padding: '10px',
-    fontSize: '16px',
-    borderRadius: '5px',
-    border: '1px solid #ccc',
-    width: '300px',
-    margin: '10px 0',
-  };
-
-  const buttonStyle = {
-    padding: '10px 20px',
-    fontSize: '16px',
-    borderRadius: '5px',
-    border: 'none',
-    backgroundColor: '#007bff',
-    color: 'white',
-    cursor: 'pointer',
-  };
-
   return (
     <div className="upload-doc-container">
       <h1 className="upload-doc-heading">Upload Document</h1>
-      <input
-        type="text"
-        placeholder="Company Name"
-        value={companyName}
-        onChange={(e) => setCompanyName(e.target.value)}
-        style={inputStyle}
-      />
-      <input
-        type="text"
-        placeholder="Agreement Name"
-        value={agreementName}
-        onChange={(e) => setAgreementName(e.target.value)}
-        style={inputStyle}
-      />
-      <input
-        type="text"
-        placeholder="Contact Name"
-        value={contactName}
-        onChange={(e) => setContactName(e.target.value)}
-        style={inputStyle}
-      />
-      <input
-        type="email"
-        placeholder="Contact Email"
-        value={contactEmail}
-        onChange={(e) => setContactEmail(e.target.value)}
-        style={inputStyle}
-      />
-      <input
-        type="file"
-        accept="application/pdf"
-        onChange={handleFileChange}
-        style={inputStyle}
-        ref={fileInputRef} // Attach the ref to the file input
-      />
-      <button onClick={handleSubmit} style={buttonStyle}>
+      <div className="inp">
+        <input
+          type="text"
+          value={companyName}
+          onChange={(e) => setCompanyName(e.target.value)}
+          placeholder=" "
+        />
+        <label className="label">Company Name</label>
+        <div className="focus-bg"></div>
+      </div>
+      <div className="inp">
+        <input
+          type="text"
+          value={agreementName}
+          onChange={(e) => setAgreementName(e.target.value)}
+          placeholder=" "
+        />
+        <label className="label">Agreement Name</label>
+        <div className="focus-bg"></div>
+      </div>
+      <div className="inp">
+        <input
+          type="text"
+          value={contactName}
+          onChange={(e) => setContactName(e.target.value)}
+          placeholder=" "
+        />
+        <label className="label">Contact Name</label>
+        <div className="focus-bg"></div>
+      </div>
+      <div className="inp">
+        <input
+          type="email"
+          value={contactEmail}
+          onChange={(e) => setContactEmail(e.target.value)}
+          placeholder=" "
+        />
+        <label className="label">Contact Email</label>
+        <div className="focus-bg"></div>
+      </div>
+      <div className="inp">
+        <input
+          type="file"
+          accept="application/pdf"
+          onChange={handleFileChange}
+          placeholder=" "
+          ref={fileInputRef} // Attach the ref to the file input
+        />
+        <div className="focus-bg"></div>
+      </div>
+      <button onClick={handleSubmit}>
         Upload PDF
       </button>
     </div>

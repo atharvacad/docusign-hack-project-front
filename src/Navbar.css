@@ -1,17 +1,27 @@
 .navbar {
-  background-color: rgba(194, 243, 255, 0.062);
-  backdrop-filter: blur(10px);
-  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensure space between logo and links */
+  padding: 10px 20px;
   position: fixed;
-  top: 0;
   width: 100%;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  top: 0;
+  left: 0;
   transition: top 0.3s;
+  z-index: 1000;
 }
 
 .navbar.hidden {
   top: -100px; /* Adjust based on the height of the navbar */
+}
+
+.navbar.transparent {
+  background-color: transparent; /* Make the navbar transparent */
+}
+
+.navbar.frosted {
+  background-color: rgba(194, 243, 255, 0.062); /* Frosted glass effect */
+  backdrop-filter: blur(10px); /* Apply blur effect */
 }
 
 .navbar-links {
@@ -20,6 +30,8 @@
   justify-content: flex-start;
   margin: 0;
   padding: 0;
+  font-size: 20px;
+  padding-right: 50px;
 }
 
 .navbar-links li {
@@ -33,6 +45,11 @@
 
 .navbar-links a:hover {
   text-decoration: underline;
+  text-decoration-color: rgb(0, 119, 255);
+}
+
+.navbar-logo img {
+  height: 70px;
 }
 
 /* filepath: /d:/GitHubCode/React/docusign-hack-project-front/src/Footer.css */

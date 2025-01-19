@@ -52,8 +52,6 @@ const ViewAgreements = () => {
           versionNumberB: versionB.versionNumber,
         },
       });
-    } else {
-      alert('Please select exactly two versions to compare.');
     }
   };
 
@@ -68,6 +66,17 @@ const ViewAgreements = () => {
     } catch (error) {
       console.error('Error sending eSignature:', error);
     }
+  };
+
+  const handleUploadUpdatedDocument = (version) => {
+    navigate('/upload', {
+      state: {
+        companyName: version.companyName,
+        agreementName: version.agreementName,
+        contactName: version.contactName,
+        contactEmail: version.contactEmail,
+      },
+    });
   };
 
   const renderTable = (data) => {
@@ -146,6 +155,12 @@ const ViewAgreements = () => {
                   <button onClick={() => handleEsignatureSubmit({ ...version, companyName: agreement.companyName, agreementName: agreement.agreementName })}>
                     Submit for eSignature
                   </button>
+                  <button onClick={() => handleUploadUpdatedDocument({ ...version, companyName: agreement.companyName, agreementName: agreement.agreementName, contactName: agreement.contactName, contactEmail: agreement.contactEmail })}>
+                    Upload Updated Document
+                  </button>
+                  {version.esignSent && (
+                    <p style={{ color: 'red' }}>eSignature request already sent</p>
+                  )}
                 </li>
               ))}
             </ul>
@@ -155,6 +170,9 @@ const ViewAgreements = () => {
       <button onClick={handleCompareAiInsight} disabled={selectedVersions.length !== 2}>
         Compare AI Insight
       </button>
+      {selectedVersions.length !== 2 && (
+        <p style={{ color: 'red' }}>Please select 2 versions</p>
+      )}
       {esignatureResponse && (
         <div className="esignature-response">
           <h3>eSignature Response:</h3>

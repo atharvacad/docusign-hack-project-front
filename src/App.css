@@ -9,8 +9,11 @@
   padding-top: 0px; /* Adjust based on the height of the navbar */
   padding-bottom: 0px; /* Adjust based on the height of the footer */
   font-family: Courier, monospace; /* Apply the font style */
+  font-size: medium;
 }
 
 .content {
   
 }
+
+

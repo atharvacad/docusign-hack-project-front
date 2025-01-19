@@ -1,5 +1,5 @@
 .compare-ai-insight-page::before {
-    content: '';
+    content: 'center';
     position: fixed;
     top: 0;
     left: 0;
@@ -33,9 +33,11 @@
     min-height: 100vh;
     position: relative;
     z-index: 1;
-    padding-top: 50px; /* Add padding for content */
+    padding-top: 100px; /* Add padding for content */
     padding-bottom: 100px; /* Add padding for content */
     overflow: auto; /* Enable scrolling */
+    padding-left: 20px;
+    padding-right: 20px;
   }
   
   .center-text {
@@ -63,4 +65,13 @@
   
   .comparison-table li {
     margin: 5px 0;
+  }
+  .inp.side-by-side {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .inp input::placeholder {
+    color: white;
   }
