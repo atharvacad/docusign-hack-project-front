@@ -26,6 +26,13 @@ const AiInsightPage = () => {
     };
 
     fetchAiInsight();
+
+    const timer = setTimeout(() => {
+      fetchAiInsight();
+    }, 6000); // Auto-refresh after 3 seconds
+
+    return () => clearTimeout(timer); // Cleanup the timer on component unmount
+
   }, [companyName, agreementName, versionNumber]);
 
   const handleQuestionSubmit = async (e) => {

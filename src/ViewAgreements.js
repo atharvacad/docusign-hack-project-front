@@ -151,7 +151,7 @@ const ViewAgreements = () => {
                 >
                   <p>Version: {version.versionNumber}</p>
                   <p>Upload Date: {new Date(version.uploadDate).toLocaleString()}</p>
-                  <p>AI Output:</p>
+                  <p>Milestone details:</p>
                   {version.aiOutput && renderTable(JSON.parse(version.aiOutput).milestones)}
                   <button onClick={() => handleViewPdf(version.fileData.data)}>
                     View PDF
