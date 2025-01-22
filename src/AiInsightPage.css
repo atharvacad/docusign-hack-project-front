@@ -1,0 +1,211 @@
+.ai-insight-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://raw.githubusercontent.com/Marvin1198/BackgroubWallpapers/main/8562939_25544.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: -1;
+}
+
+.ai-insight-page::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+  z-index: -1;
+}
+
+.ai-insight-page {
+  font-family: Courier, monospace; /* Apply the font style */
+  color: white; /* Set text color to white */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align items to the top */
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  padding-top: 100px; /* Add padding for content */
+  padding-bottom: 100px; /* Add padding for content */
+  overflow: auto; /* Enable scrolling */
+}
+
+.center-text {
+  text-align: center;
+}
+
+.agreement-details {
+  list-style-type: none;
+  padding: 0;
+}
+
+.agreement-details1 {
+list-style-type: none;
+padding: 0;
+text-align: center;
+}
+
+.milestones-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.milestone-item {
+  margin: 10px 0;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.answer-response {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.inp {
+  position: relative;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 700px; /* Double the max-width */
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.inp .label {
+  position: absolute;
+  top: 20px;
+  left: 12px;
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+  font-weight: 500;
+  transform-origin: 0 0;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.inp .focus-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.05);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.inp input,
+.inp textarea {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  border: 0;
+  font-family: inherit;
+  padding: 16px 12px 0 12px;
+  height: 56px;
+  font-size: 16px;
+  font-weight: 400;
+  background: rgba(0, 0, 0, 0.02);
+  box-shadow: inset 0 -1px 0 rgb(255, 255, 255);
+  color: #ffffff;
+  transition: all 0.15s ease;
+}
+
+.inp input:hover,
+.inp textarea:hover {
+  background: rgba(0, 0, 0, 0.04);
+  box-shadow: inset 0 -1px 0 rgb(255, 255, 255);
+}
+
+.inp input:not(:placeholder-shown) + .label,
+.inp textarea:not(:placeholder-shown) + .label {
+  color: rgb(255, 255, 255);
+  transform: translate3d(0, -12px, 0) scale(0.75);
+}
+
+.inp input:focus,
+.inp textarea:focus {
+  background: rgba(255, 255, 255, 0.05);
+  outline: none;
+  box-shadow: inset 0 -2px 0 #0077FF;
+}
+
+.inp input:focus + .label,
+.inp textarea:focus + .label {
+  color: #0077FF;
+  transform: translate3d(0, -12px, 0) scale(0.75);
+}
+
+.inp input:focus + .label + .focus-bg,
+.inp textarea:focus + .label + .focus-bg {
+  transform: scaleX(1);
+  transition: all 0.1s ease;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.inp input::placeholder,
+.inp textarea::placeholder {
+  color: white;
+}
+
+.textarea {
+  width: 600px; /* Set default width */
+  height: 200px; /* Set default height */
+}
+.highlighted-answer {
+  background-color: rgba(36, 175, 255, 0.301); /* Highlight background color */
+  padding: 10px; /* Add padding for better readability */
+  border-radius: 5px; /* Rounded corners */
+  font-weight: bold; /* Make the text bold */
+}
+
+.highlighted-answer1 {
+  background-color: rgba(0, 0, 0, 0.658); /* Highlight background color */
+  padding: 10px; /* Add padding for better readability */
+  border-radius: 5px; /* Rounded corners */
+  font-weight: bold; /* Make the text bold */
+  text-align: center; /* Center text horizontally */
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+}

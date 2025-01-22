@@ -1,38 +1,19 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.app-container {
+  position: relative;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-image: url("https://raw.githubusercontent.com/Marvin1198/BackgroubWallpapers/main/8562939_25544.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: black; /* Set the font color to black */
+  padding-top: 0px; /* Adjust based on the height of the navbar */
+  padding-bottom: 0px; /* Adjust based on the height of the footer */
+  font-family: Courier, monospace; /* Apply the font style */
+  font-size: medium;
 }
 
-.App-link {
-  color: #61dafb;
+.content {
+  
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+

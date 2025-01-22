@@ -1,0 +1,36 @@
+
+.navbar.hidden {
+  top: -100px; /* Adjust based on the height of the navbar */
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  margin: 0 1rem;
+}
+
+.navbar-links a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+.navbar-links a:hover {
+  text-decoration: underline;
+}
+
+.footer {
+  background-color: rgba(194, 243, 255, 0.062);
+  backdrop-filter: blur(10px);
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

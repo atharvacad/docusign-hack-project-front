@@ -1,0 +1,114 @@
+.view-agreements::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://raw.githubusercontent.com/Marvin1198/BackgroubWallpapers/main/8562939_25544.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: -1;
+}
+
+.view-agreements::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.678); /* Adjust the opacity as needed */
+  z-index: -1;
+ 
+}
+
+.view-agreements {
+  font-family: Courier, monospace; /* Apply the font style */
+  color: white; /* Set text color to white */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align items to the top */
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  padding-top: 100px; /* Add padding for content */
+  padding-bottom: 100px; /* Add padding for content */
+  overflow: auto; /* Enable scrolling */
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.agreements-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.agreement-item {
+  margin: 20px 0;
+}
+
+.versions-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.version-item {
+  margin: 10px 0;
+}
+
+.selected-version {
+  background-color: rgba(0, 123, 255, 0.1); /* Highlight selected version */
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.esignature-response {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.selected-version {
+  border: 2px solid blue; /* Blue border around the selected version */
+  color: black; /* Change text color to black */
+}
+
+.selected-version .data-table {
+  color: black; /* Change table text color to black */
+}
+
+.selected-version p, .selected-version button {
+  color: black; /* Change text color of paragraphs and buttons to black */
+}
